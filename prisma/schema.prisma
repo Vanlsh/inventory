@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductSubtype {
+  phone
+  computer
+  tablet
+  tv
+  headphones
+  console
+  camera
+  smartwatch
+}
+
+model Guarantees {
+  id         Int      @id @default(autoincrement())
+  start_date DateTime @db.DateTime(0)
+  end_date   DateTime @db.DateTime(0)
+  product_id Int      @unique(map: "product_id")
+  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "Guarantees_ibfk_1")
+}
+
+model Orders {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  date        DateTime  @default(now()) @db.DateTime(0)
+  description String?   @db.Text
+  user_id     Int
+  user        User      @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "Orders_ibfk_1")
+  products    Product[]
+
+  @@index([user_id], map: "user_id")
+}
+
+model Prices {
+  id         Int     @id @default(autoincrement())
+  value      Int
+  symbol     String  @db.VarChar(11)
+  is_default Boolean @default(false)
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "Prices_ibfk_1")
+
+  @@index([product_id], map: "product_id")
+}
+
+model Product {
+  id            Int         @id @default(autoincrement())
+  serial_number Int
+  is_new        Boolean     @default(true)
+  photo         String?     @db.VarChar(255)
+  title         String      @db.VarChar(255)
+  type          ProductSubtype
+  specification String      @db.VarChar(255)
+  date          DateTime    @default(now()) @db.Timestamp(0)
+  order_id      Int
+  user_id       Int
+  guarantees    Guarantees?
+  prices        Prices[]
+  user          User        @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "Product_ibfk_1")
+  order         Orders      @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "Product_ibfk_2")
+
+  @@index([order_id], map: "order_id")
+  @@index([user_id], map: "user_id")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique(map: "name") @db.VarChar(255)
+  password String    @db.VarChar(255)
+  orders   Orders[]
+  products Product[]
+}

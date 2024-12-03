@@ -6,6 +6,15 @@ First, you need to install dependency:
 npm install
 ```
 
+Generate Prisma Client:
+
+```bash
+npx prisma generate
+
+```
+
+If you going to use your own database, you need to
+
 Add .env. You can take mine
 
 ```bash

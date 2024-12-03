@@ -40,7 +40,6 @@ const AuthForm = ({ className, type, callbackUrl }: IAuthFormProps) => {
     submit(async () => {
       try {
         if (type === FormType.Register) {
-          console.log("register", values);
           const user = await registerAction(values);
           if (user.error) {
             console.log(user.error);

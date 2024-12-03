@@ -24,7 +24,6 @@ const AddProduct = ({ orderId, className, prod }: IAddProductProps) => {
   };
 
   const handleSubmit = (values: TProductSchema) => {
-    console.log(values);
     handle(async () => {
       try {
         const { error, success } = await createProduct({ orderId, values });

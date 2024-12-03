@@ -6,7 +6,6 @@ interface IProductsProps {
   products: TProduct[];
 }
 const Products = ({ products }: IProductsProps) => {
-  console.log(products);
 
   return (
     <ul className="flex flex-col gap-4 overflow-x-auto">

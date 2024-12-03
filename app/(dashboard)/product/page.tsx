@@ -27,8 +27,6 @@ const ProductPage = async ({ searchParams }: IProductPageProps) => {
 
   const products = await getProducts({ user_id, query });
 
-  console.log("product", products);
-
   return (
     <>
       <div className="flex gap-4 mb-14 items-center">

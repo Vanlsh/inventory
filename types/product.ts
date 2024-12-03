@@ -11,17 +11,6 @@ export type TPrice = {
   symbol: string;
 };
 
-// export enum ProductSubtype {
-//   PHONE = "phone",
-//   COMPUTER = "computer",
-//   TABLET = "tablet",
-//   TV = "tv",
-//   HEADPHONES = "headphones",
-//   CONSOLE = "console",
-//   CAMERA = "camera",
-//   SMARTWATCH = "smartwatch",
-// }
-
 export type TProduct = {
   id: number;
   serial_number: number;
